@@ -5,8 +5,8 @@ import ReactCrop from 'react-image-crop';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-import API from '../services/api';
-import { getProductById, updateProduct, getCategories } from '../services/productService';
+import API from '../communication/api';
+import { getProductById, updateProduct, getCategories } from '../communcation/productService';
 
 const validationSchema = Yup.object({
     title: Yup.string().required('Title is required').min(3, "Minimum 3 characters required"),

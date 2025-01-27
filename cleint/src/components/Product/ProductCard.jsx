@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../Contexts';
-import toast from 'react-hot-toast';
 
 const ProductCard = ({ product }) => {
   const { addWishList } = useContext(CartContext)

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Heart, ChevronRight, Plus, Minus, Edit } from "lucide-react";
-import { getProductById } from "../services/productService";
+import { getProductById } from "../communication/productService";
 import toast from "react-hot-toast";
 import { CartContext } from "../components/Contexts";
 

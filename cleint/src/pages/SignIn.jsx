@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import { CartContext } from '../components/Contexts';
 
 const SigninSchema = Yup.object().shape({

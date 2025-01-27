@@ -14,7 +14,6 @@ import {
   removeFromCart as removeFromCartAPI,
   getCategories,
   loginUser,
-  logoutUser,
   addToWishList,
   removeFromWishList,
   getWishList,
@@ -22,7 +21,7 @@ import {
   addProduct,
   addSubcategory,
   registerUser,
-} from "../services/productService.js";
+} from "../communication/productService.js";
 import { startCronJob } from "../services/cronJob.js";
 
 export const CartContext = createContext();
