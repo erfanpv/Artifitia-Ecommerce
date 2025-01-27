@@ -3,8 +3,13 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDb from "./src/config/db.js";
 import errorHandler from "./src/middlewares/error/errorHandler.js";
-import authRoutes from "./src/routes/authRoutes.js";
 import CustomError from "./src/middlewares/error/CustomError.js";
+import authRoutes from "./src/routes/authRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
+import productRoutes from "./src/routes/productRoutes.js"
+import categoryRoutes from "./src/routes/categoryRoutes.js";
+import cartRoutes from "./src/routes/cartRoutes.js";
+import wishlistRoutes from "./src/routes/wishListRoutes.js";
 
 const app = express();
 dotenv.config();
@@ -16,6 +21,11 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 app.use(errorHandler);
 
