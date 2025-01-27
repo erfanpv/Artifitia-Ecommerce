@@ -11,7 +11,7 @@ export const signUp = async (req, res) => {
 
   const existingUser = await userSchema.findOne({ email });
   if (existingUser) {
-    throw new CustomError("Email already exists...", 400);
+    throw new CustomError("Email already exists...", 409);
   }
 
   const hashedPassword = await hashPassword(password);
@@ -22,13 +22,21 @@ export const signUp = async (req, res) => {
     password: hashedPassword,
   });
   await newUser.save();
+  const token = generateToken(newUser._id);
 
-  sendResponse(res, 201, true, "User Registered Successfully");
+  sendResponse(
+    res,
+    201,
+    true,
+    "User Registered Successfully",
+    { id: newUser._id, name: newUser.name, email: newUser.email },
+    token
+  );
 };
 
 export const login = async (req, res, next) => {
   const { email, password } = req.body;
-
+  console.log(req.body);
   const user = await userSchema.findOne({ email });
   if (!user) {
     throw new CustomError("No user found. Please create an account.", 400);
