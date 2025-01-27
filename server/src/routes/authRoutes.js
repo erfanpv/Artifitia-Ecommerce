@@ -1,6 +1,6 @@
 import express from "express";
 import { signUp, login, logout } from "../controllers/authController.js";
-import tryCatch from "../middlewares/asyncHandler/asyncHandler.js"
+import tryCatch from "../middlewares/try-catch/try-catch.js"
 
 const authRoutes = express.Router();
 
