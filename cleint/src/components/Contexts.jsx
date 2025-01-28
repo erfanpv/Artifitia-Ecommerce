@@ -14,6 +14,7 @@ import {
   removeFromCart as removeFromCartAPI,
   getCategories,
   loginUser,
+  logoutUser,
   addToWishList,
   removeFromWishList,
   getWishList,
@@ -56,9 +57,9 @@ export const CartProvider = ({ children }) => {
     const fetchProducts = async (page = 1, limit = 10) => {
       try {
         const response = await getProducts({ page, limit });
-        setProducts(response.data.products);
-        setAllProducts(response.data.prducts);
-        setTotalItems(response.data.totalItems);
+        setProducts(response.data);
+        setAllProducts(response.data);
+        setTotalItems(response.totalItems);
         // console.log(response)
       } catch (error) {
         toast.error("Failed to fetch products");
@@ -82,16 +83,15 @@ export const CartProvider = ({ children }) => {
     fetchCategories();
     fetchProducts();
   }, []);
-
   const fetchWishlist = async () => {
     try {
       const data = await getWishList(id);
+      console.log(data);
       setWishlist(data.data);
     } catch (error) {
       toast.dismiss("Failed to fetch wishlist");
     }
   };
-
   useEffect(() => {
     if (id) {
       const fetchCart = async () => {
@@ -111,13 +111,13 @@ export const CartProvider = ({ children }) => {
   const signup = async (userData, route) => {
     try {
       const user = await registerUser(userData);
-      localStorage.setItem("id", user.data.id);
+      console.log(user);
+      localStorage.setItem("id", user.data._id);
       localStorage.setItem("token", user.token);
       setIsLoggedIn(true);
       toast.success("Registration successful!");
       route("/");
     } catch (error) {
-      console.log(error, "afna");
       console.error("Signup failed:", error.response?.data || error.message);
       if (error.response?.status === 400) {
         toast.error("Email already exists");
@@ -131,7 +131,8 @@ export const CartProvider = ({ children }) => {
   const login = async (credentials, route) => {
     try {
       const user = await loginUser(credentials);
-      localStorage.setItem("id", user.data.id);
+      console.log(user);
+      localStorage.setItem("id", user.user.id);
       localStorage.setItem("token", user.token);
       setIsLoggedIn(true);
       toast.success("Logged in successfully");
@@ -148,7 +149,7 @@ export const CartProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      // await logoutUser();
+      await logoutUser();
       localStorage.clear();
       setIsLoggedIn(false);
       setCart([]);
@@ -162,8 +163,8 @@ export const CartProvider = ({ children }) => {
   const fetchProductsPaginated = async (page, limit) => {
     try {
       const response = await getProducts({ page, limit });
-      setProducts(response.data.products);
-      setTotalItems(response.data.totalItems);
+      setProducts(response.data);
+      setTotalItems(response.totalItems);
     } catch (error) {
       toast.error("Failed to fetch paginated products");
     }
@@ -235,12 +236,11 @@ export const CartProvider = ({ children }) => {
 
   const addWishList = async (product) => {
     try {
-      const id = localStorage.getItem("id");
-      await addToWishList(id, product._id);
-      fetchWishlist();
+      const data = await addToWishList(id, product._id);
+      setWishlist(data.data);
+      fetchWishlist()
       toast.success("Added to wishlist");
     } catch (error) {
-      console.log(error);
       if (error.response.status === 401) {
         toast.error("Product already in wishlist");
       } else {
