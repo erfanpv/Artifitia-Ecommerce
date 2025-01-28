@@ -83,15 +83,7 @@ export const CartProvider = ({ children }) => {
     fetchCategories();
     fetchProducts();
   }, []);
-  const fetchWishlist = async () => {
-    try {
-      const data = await getWishList(id);
-      console.log(data);
-      setWishlist(data.data);
-    } catch (error) {
-      toast.dismiss("Failed to fetch wishlist");
-    }
-  };
+
   useEffect(() => {
     if (id) {
       const fetchCart = async () => {
@@ -102,7 +94,15 @@ export const CartProvider = ({ children }) => {
           toast.dismiss("Failed to fetch cart");
         }
       };
-
+      const fetchWishlist = async () => {
+        try {
+          const data = await getWishList(id);
+          console.log(data)
+          setWishlist(data.data);
+        } catch (error) {
+          toast.dismiss("Failed to fetch wishlist");
+        }
+      };
       fetchWishlist();
       fetchCart();
     }
@@ -238,7 +238,7 @@ export const CartProvider = ({ children }) => {
     try {
       const data = await addToWishList(id, product._id);
       setWishlist(data.data);
-      fetchWishlist()
+
       toast.success("Added to wishlist");
     } catch (error) {
       if (error.response.status === 401) {
