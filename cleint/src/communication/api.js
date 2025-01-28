@@ -4,6 +4,7 @@ import axios from "axios";
 // console.log(baseUrl);
 const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://artifitia-ecommerce.onrender.com/api";
 
+
 const API = axios.create({
   baseURL: baseUrl,
 });

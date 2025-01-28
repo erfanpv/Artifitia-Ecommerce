@@ -22,7 +22,7 @@ import {
   addSubcategory,
   registerUser,
 } from "../communication/productService.js";
-import { startCronJob } from "../services/cronJob.js";
+import { startCronJob } from "../communication/cronJob.js";
 
 export const CartContext = createContext();
 
